@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Navbar } from "@/components/Navbar";
+import { Header } from "@/ui/components/Header";
 import { useTheme } from "next-themes";
 import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 
@@ -7,39 +7,53 @@ vi.mock("next-themes", () => ({
   useTheme: vi.fn(),
 }));
 
-describe("Navbar", () => {
+describe("Header / Navbar", () => {
   const setTheme = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("renders the brand logo link", () => {
+  it("renders the Amr Abed brand link", () => {
     (useTheme as Mock).mockReturnValue({
       theme: "light",
       setTheme,
     });
 
-    render(<Navbar />);
+    render(<Header />);
 
-    const brandLink = screen.getByRole("link", { name: /cur8d/i });
+    const brandLink = screen.getByRole("link", { name: /Amr Abed/i });
     expect(brandLink).toBeInTheDocument();
-    expect(brandLink).toHaveAttribute("href", "/");
+    expect(brandLink).toHaveAttribute("href", "https://amrabed.com");
   });
 
-  it("renders the documentation link with correct attributes", () => {
+  it("renders ecosystem navigation links", () => {
     (useTheme as Mock).mockReturnValue({
       theme: "light",
       setTheme,
     });
 
-    render(<Navbar />);
+    render(<Header currentSite="blog" />);
 
-    const docsLink = screen.getByRole("link", { name: /docs/i });
-    expect(docsLink).toBeInTheDocument();
-    expect(docsLink).toHaveAttribute("href", "https://cur8d.dev/typescript");
-    expect(docsLink).toHaveAttribute("target", "_blank");
-    expect(docsLink).toHaveAttribute("rel", "noopener noreferrer");
+    const homeLinks = screen.getAllByRole("link", { name: "Home" });
+    const blogLinks = screen.getAllByRole("link", { name: "Blog" });
+    const coursesLinks = screen.getAllByRole("link", { name: "Courses" });
+
+    expect(homeLinks.length).toBeGreaterThan(0);
+    expect(blogLinks.length).toBeGreaterThan(0);
+    expect(coursesLinks.length).toBeGreaterThan(0);
+  });
+
+  it("renders subsite breadcrumb when currentSite is set", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    render(<Header currentSite="courses" />);
+
+    const breadcrumbs = screen.getAllByRole("link", { name: "Courses" });
+    expect(breadcrumbs.length).toBeGreaterThan(0);
   });
 
   it("renders the theme toggle", () => {
@@ -48,7 +62,7 @@ describe("Navbar", () => {
       setTheme,
     });
 
-    render(<Navbar />);
+    render(<Header />);
 
     const themeToggle =
       screen.queryByLabelText(/Switch to (dark|light) theme/) ||

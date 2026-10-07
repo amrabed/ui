@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { Footer } from "@/ui/components/Footer";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 describe("Footer", () => {
@@ -11,27 +12,21 @@ describe("Footer", () => {
     vi.useRealTimers();
   });
 
-  it("renders the current year and copyright text", async () => {
-    const date = new Date(2025, 0, 1);
+  it("renders the current year and Amr Abed copyright text", () => {
+    const date = new Date(2026, 0, 1);
     vi.setSystemTime(date);
 
-    // Re-import the component after setting the system time so the module-level CURRENT_YEAR is re-evaluated.
-    const { Footer } = await import("@/components/Footer");
     render(<Footer />);
 
-    const footerText = screen.getByText(/© 2025 Cur8d\. All rights reserved\./);
+    const footerText = screen.getByText(/© 2026 Amr Abed/);
     expect(footerText).toBeInTheDocument();
   });
 
-  it("renders with the correct year if it is 2030", async () => {
-    const date = new Date(2030, 0, 1);
-    vi.setSystemTime(date);
-
-    // Re-import the component after setting the system time so the module-level CURRENT_YEAR is re-evaluated.
-    const { Footer } = await import("@/components/Footer");
+  it("renders social links with tooltips", () => {
     render(<Footer />);
 
-    const footerText = screen.getByText(/© 2030 Cur8d\. All rights reserved\./);
-    expect(footerText).toBeInTheDocument();
+    expect(screen.getByLabelText(/LinkedIn/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/GitHub/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Google Scholar/i)).toBeInTheDocument();
   });
 });

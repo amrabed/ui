@@ -1,120 +1,103 @@
-# cur8d — a production-ready Next.js starter
+# @amrabed/ui
 
-[![CI](https://github.com/cur8d/typescript/actions/workflows/check.yml/badge.svg)](https://github.com/cur8d/typescript/actions/workflows/check.yml)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=cur8d.tsx&metric=coverage)](https://sonarcloud.io/summary/new_code?id=cur8d.tsx)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cur8d.tsx&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=cur8d.tsx)
+[![CI](https://github.com/amrabed/ui/actions/workflows/check.yml/badge.svg)](https://github.com/amrabed/ui/actions/workflows/check.yml)
 
-cur8d is an opinionated, production-ready Next.js starter template optimized for data integration, accessibility, and high performance. It comes with built-in support for toolchain management, automated testing, static documentation, and streamlined deployments.
+Shared UI chrome, design tokens, navigation breadcrumbs, and components for Amr Abed's web ecosystem (`amrabed.com`, `blog`, and `courses`).
+
+Built on **Next.js 16**, **React 19**, **Tailwind CSS v4**, and **HeroUI**.
+
+---
 
 ## Capabilities
 
-- **Interactive Initialization**: A custom template setup script that configures your project's metadata, repository links, hosting options, and cleans up after itself.
-- **Strict Type-Safety**: Built with TypeScript in strict mode, including runtime verification of environment variables using Zod schemas.
-- **Modern Styling & UI Foundation**: Implemented with Tailwind CSS (using CSS-first configuration and variables) and HeroUI compound components, pre-configured with a system-aware light/dark mode (`next-themes`).
-- **Comprehensive Testing Rigor**: Robust test coverage enforcement (80%+ target) with Vitest for unit/component tests and Playwright for E2E, visual, and accessibility (Axe) audits.
-- **Static Documentation Project**: An integrated documentation workspace powered by Nextra, generating a static site ready for GitHub Pages or Firebase hosting.
-- **Zero-Friction Dev Environment**: Fully managed local development tasks and toolchains via `mise`, including custom alias shortcuts for common git and npm tasks.
-- **Flexible Deployment Targets**: Configured for Serverless deployments on Vercel, Node.js web service on Render, and static site deployment on Firebase Hosting.
+- **Unified Header**: Responsive breadcrumb branding (`Amr Abed / [Site]`), cross-site ecosystem navigation, mobile drawer menu, and slot for site-specific extras (search, RSS).
+- **Unified Footer**: Canonical copyright notice, verified social profiles (LinkedIn, GitHub, Google Scholar, Medium, Stack Overflow, X, YouTube, Goodreads), and accessible tooltips.
+- **Unified Color Palette**: Canonical Indigo accent (`#4f46e5` / `#6366f1`) and Slate/Zinc neutrals configured via Tailwind v4 `@theme` and `@layer base`.
+- **System-Aware Theme Switching**: Dark/light mode switcher powered by `next-themes` and HeroUI compound components.
+- **Interactive Showcase**: Next.js App Router live preview displaying all header states, tokens, and components.
 
-## Project Structure
+---
 
-This project is organized as a monorepo workspace managed by `pnpm`:
+## Package Structure
 
 ```text
-├── app/                  # Main Next.js App Router application
-│   ├── components/       # Reusable React components (with barrel exports)
-│   ├── hooks/            # Custom React hooks (e.g., search state)
-│   ├── lib/              # Logic layer, Zod environment schema, SEO JSON-LD helpers, error reporting
-│   ├── layout.tsx        # Root layout with providers configured
-│   └── globals.css       # Tailwind CSS v4 directives and variables
-├── docs/                 # Nextra v4 documentation site (pnpm workspace package)
-├── scripts/              # Template setup and utility scripts
-├── tests/                # Verification suites
-│   ├── unit/             # Component and utility tests (Vitest)
-│   └── e2e/              # E2E and accessibility audits (Playwright)
-├── .mise.toml            # Toolchain, task definitions, and run shortcuts
-├── render.yaml           # Render Blueprint specification
-└── pnpm-workspace.yaml   # Monorepo workspaces definition
+├── src/
+│   ├── components/
+│   │   ├── Header/          # Header with breadcrumb identity & cross-site navigation
+│   │   ├── Footer/          # Footer with verified social profiles & copyright
+│   │   ├── ThemeToggle/     # Accessible dark/light mode button
+│   │   ├── Providers/       # NextThemes + HeroUI context providers
+│   │   └── index.ts
+│   ├── styles/
+│   │   └── globals.css      # Canonical Tailwind v4 @theme and Indigo+Slate tokens
+│   ├── constants/           # Ecosystem URLs, verified social profiles, metadata
+│   └── index.ts             # Main library entry point
+├── app/                     # Interactive Next.js showcase & style guide
+├── tests/
+│   ├── unit/                # Vitest unit test suite (17 suites, 57 tests)
+│   └── e2e/                 # Playwright E2E & Axe accessibility audits
+└── .mise.toml               # Toolchain and task definitions
 ```
 
-## Tech Stack
+---
 
-The core framework and library stack includes (without version locks):
+## Consuming in Other Repositories
 
-- **Framework**: Next.js (App Router, Server Components)
-- **UI Library**: React & Framer Motion
-- **Component Library**: HeroUI (using the compound component dot-notation pattern)
-- **Styling**: Tailwind CSS & PostCSS
-- **Validation**: Zod (environment configuration and schemas)
-- **Icons**: Lucide React
-- **Unit Testing**: Vitest with React Testing Library & jsdom
-- **E2E & A11y Testing**: Playwright & `@axe-core/playwright`
-- **Documentation**: Nextra & Markdown (MDX)
-- **Deployments**: Vercel CLI, Render Blueprint & Deploy Hook, and Firebase CLI
+### 1. Installation
+In your consumer repository (`amrabed.github.io`, `blog`, or `courses`):
 
-## Quick Start
+```bash
+# Via git dependency
+pnpm add github:amrabed/ui
+```
 
-### Prerequisites
+### 2. Styling
+Import the canonical stylesheet in your root layout or CSS:
 
-Ensure you have [mise](https://mise.jdx.dev/) installed on your system.
+```css
+/* app/globals.css */
+@import "@amrabed/ui/globals.css";
+```
 
-### Installation & Setup
+### 3. Layout Usage
+Wrap your application in `Providers` and mount `Header` and `Footer`:
 
-1. **Customize the template**:
-   Run the interactive setup script to configure project names, repositories, and hosting configurations:
-   ```bash
-   pnpm run init
-   ```
+```tsx
+// app/layout.tsx
+import "@amrabed/ui/globals.css";
+import { Header, Footer, Providers } from "@amrabed/ui";
 
-2. **Install the toolchain**:
-   Let `mise` automatically download and configure Node.js and `pnpm`:
-   ```bash
-   mise install
-   ```
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <Providers>
+          {/* currentSite controls the active highlight and breadcrumb */}
+          <Header currentSite="courses">
+            {/* Optional site-specific controls (e.g. Search, RSS) */}
+          </Header>
 
-3. **Install dependencies**:
-   ```bash
-   pnpm install
-   ```
+          <main id="main-content">{children}</main>
 
-4. **Install Playwright browsers** (for E2E/A11y testing):
-   ```bash
-   pnpm exec playwright install --with-deps
-   ```
+          <Footer />
+        </Providers>
+      </body>
+    </html>
+  );
+}
+```
 
-5. **Start development**:
-   ```bash
-   pnpm dev
-   ```
+---
 
-## Development Commands
+## Local Development
 
-All development tasks are defined in `.mise.toml` and can be run using the `mise` CLI or package manager scripts:
+```bash
+# Install dependencies
+mise run install   # or pnpm install
 
-| Command | Alias / Task | Description |
-| :--- | :--- | :--- |
-| `pnpm dev` | `mise run dev` (or `d`) | Starts the local dev server with Turbopack |
-| `pnpm build` | `mise run build` (or `b`) | Builds the main application for production |
-| `pnpm lint` | `mise run lint` (or `l`) | Runs ESLint over the codebase |
-| `pnpm test` | `mise run test` (or `t`) | Runs Vitest unit tests |
-| `pnpm run test:coverage` | `mise run test:coverage` | Runs unit tests and reports coverage |
-| `pnpm run test:e2e` | `mise run test:e2e` | Runs E2E and visual tests with Playwright |
-| `pnpm run verify` | `mise run verify` (or `v`) | Runs linting, typechecking, and unit tests with coverage |
-| `pnpm run docs:dev` | `mise run docs:dev` | Starts the local documentation server |
+# Start interactive showcase
+mise run dev       # or pnpm dev
 
-## CI & Code Quality
-
-This template includes a pre-configured GitHub Actions workflow in `.github/workflows/check.yml` that runs linting, typechecking, unit tests (with LCOV coverage), and E2E tests.
-
-It also integrates with **SonarCloud** for static code analysis, quality gate status, and test coverage reporting. To activate this integration in your repository:
-1. Set up your repository on [SonarCloud](https://sonarcloud.io/).
-2. Add your SonarCloud token as a repository secret named `SONAR_TOKEN` under your repository settings (`Settings > Secrets and variables > Actions`).
-
-## Documentation
-
-Full documentation is available at [https://cur8d.dev/typescript](https://cur8d.dev/typescript).
-
-## License
-
-MIT
-
+# Run verification checks (lint, typecheck, tests)
+mise run verify    # or pnpm run typecheck && pnpm run lint && pnpm test
+```

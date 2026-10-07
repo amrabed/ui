@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@theme {
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace);
+
+  --color-primary: var(--heroui-primary);
+  --color-secondary: var(--heroui-secondary);
+  --color-foreground: var(--heroui-foreground);
+  --color-background: var(--heroui-background);
+  --color-divider: var(--heroui-divider);
+  --color-heading: var(--heroui-heading);
+  --color-muted: var(--heroui-muted);
+  --color-surface: var(--heroui-surface);
+
+  --color-border: var(--heroui-divider);
+  --color-input: var(--heroui-divider);
+  --color-ring: var(--heroui-primary);
+
+  --radius-lg: 0.5rem;
+  --radius-md: calc(0.5rem - 2px);
+  --radius-sm: calc(0.5rem - 4px);
+}
+
+@layer base {
+  :root {
+    --heroui-primary: #4f46e5; /* indigo-600 */
+    --heroui-secondary: #52525b; /* zinc-600 */
+    --heroui-foreground: #475569; /* slate-600 */
+    --heroui-background: #ffffff;
+    --heroui-divider: rgba(226, 232, 240, 0.8); /* slate-200 */
+    --heroui-heading: #0f172a; /* slate-900 */
+    --heroui-muted: #64748b; /* slate-500 */
+    --heroui-surface: #f8fafc; /* slate-50 */
+    --heroui-chip-bg: #f1f5f9; /* slate-100 */
+    --heroui-chip-fg: #475569; /* slate-600 */
+
+    /* HSL compatibility tokens */
+    --background: 0 0% 100%;
+    --foreground: 215 25% 27%;
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+    --muted: 215 16% 47%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --ring: 243 75% 59%;
+  }
+
+  .dark {
+    --heroui-primary: #6366f1; /* indigo-500 */
+    --heroui-secondary: #a1a1aa; /* zinc-400 */
+    --heroui-foreground: #94a3b8; /* slate-400 */
+    --heroui-background: #020617; /* slate-950 */
+    --heroui-divider: rgba(30, 41, 59, 0.8); /* slate-800 */
+    --heroui-heading: #f1f5f9; /* slate-100 */
+    --heroui-muted: #94a3b8; /* slate-400 */
+    --heroui-surface: rgba(15, 23, 42, 0.4); /* slate-900 / 40% */
+    --heroui-chip-bg: #1e293b; /* slate-800 */
+    --heroui-chip-fg: #cbd5e1; /* slate-300 */
+
+    /* HSL compatibility tokens */
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 215 20% 65%;
+    --muted-foreground: 215 20% 65%;
+    --border: 215 28% 17%;
+    --ring: 239 84% 67%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+}
+
+/* Shared utility classes across Amr Abed web ecosystem */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+}
+
+.card-container {
+  @apply flex flex-col gap-2 p-6 rounded-2xl bg-transparent border border-divider shadow-none hover:border-primary transition-colors duration-300;
+}
+
+.icon-link {
+  @apply text-muted hover:text-primary transition-colors flex items-center gap-1;
+}

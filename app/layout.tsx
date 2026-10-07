@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cur8d",
-  description: "A modern Next.js starter template",
+  title: "Amr Abed UI",
+  description: "Shared UI chrome, design tokens, and components for Amr Abed's web ecosystem",
   icons: {
     icon: "/icon.png",
   },

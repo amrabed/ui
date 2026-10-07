@@ -1,10 +1,17 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Navbar", () => {
-  test("should have a Docs link pointing to https://cur8d.dev/typescript", async ({ page }) => {
+test.describe("Header", () => {
+  test("should have a brand link pointing to amrabed.com", async ({ page }) => {
     await page.goto("/");
-    const docsLink = page.getByRole("link", { name: "Docs" });
-    await expect(docsLink).toBeVisible();
-    await expect(docsLink).toHaveAttribute("href", "https://cur8d.dev/typescript");
+    const brandLink = page.getByRole("link", { name: "Amr Abed" }).first();
+    await expect(brandLink).toBeVisible();
+    await expect(brandLink).toHaveAttribute("href", "https://amrabed.com");
+  });
+
+  test("should have ecosystem navigation links", async ({ page }) => {
+    await page.goto("/");
+    const blogLink = page.getByRole("link", { name: "Blog" }).first();
+    await expect(blogLink).toBeVisible();
+    await expect(blogLink).toHaveAttribute("href", "https://amrabed.com/blog");
   });
 });

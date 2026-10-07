@@ -23,8 +23,12 @@
       }
     ],
     "paths": {
+      "@/ui/*": [
+        "./src/*"
+      ],
       "@/*": [
-        "./app/*"
+        "./app/*",
+        "./src/*"
       ],
       "@/components/*": [
         "./app/components/*"
