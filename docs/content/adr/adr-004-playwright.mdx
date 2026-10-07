@@ -1,0 +1,15 @@
+# ADR-004: Playwright over Cypress
+Status: Accepted
+
+## Context
+We need a reliable, cross-browser end-to-end testing and automated accessibility auditing framework.
+
+## Decision
+We chose Playwright.
+
+## Rationale
+Playwright offers multi-browser testing across Chromium, Firefox, and WebKit, isolated browser contexts, parallel execution, and built-in accessibility testing via `@axe-core/playwright`.
+
+## Consequences
+E2E and accessibility test suites live in `tests/e2e/`. Playwright browsers are installed via `mise run playwright:install`.
+

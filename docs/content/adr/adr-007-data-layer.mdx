@@ -1,0 +1,15 @@
+# ADR-007: Logic & Data Layer Strategy
+Status: Accepted
+
+## Context
+The application requires a decoupled, testable, and robust architecture for logic, environment validation, error reporting, and data handling.
+
+## Decision
+We centralize business logic, environment validation, and third-party service abstractions in `app/lib/`.
+
+## Rationale
+Decoupling logic, observability, and data access from React UI components maximizes testability, isolates runtime side-effects, and allows seamless evolution from mock data to production storage providers (such as Vercel Blob).
+
+## Consequences
+Components focus purely on rendering and user interaction. All environment parsing (`env.ts`), structured metadata serialization (`json-ld.ts`), and error telemetry (`error-reporting.ts`) are imported from `@/lib/`.
+

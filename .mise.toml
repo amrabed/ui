@@ -1,0 +1,128 @@
+[tools]
+node = "latest"
+pnpm = "latest"
+
+[shell_alias]
+m = "mise run"
+i = "mise run install"
+l = "mise run lint"
+t = "mise run test"
+b = "mise run build"
+d = "mise run dev"
+s = "mise run start"
+v = "mise run verify"
+
+g = "git"
+ga = "git add ."
+gb = "git branch"
+gco = "git checkout"
+gs = "git status"
+gc = "git commit"
+gp = "git push"
+gpl = "git pull"
+gr = "git rebase --merge"
+
+[tasks.init]
+description = "Initialize the project template"
+run = "pnpm run init && mise install"
+
+[tasks.install]
+description = "Install dependencies"
+run = "pnpm install"
+alias = "i"
+
+[tasks.dev]
+description = "Start development server"
+run = "pnpm run dev"
+alias = "d"
+
+[tasks.build]
+description = "Build the project"
+run = "pnpm run build"
+alias = "b"
+
+[tasks.start]
+description = "Start production server"
+run = "pnpm run start"
+alias = "s"
+
+[tasks.lint]
+description = "Run linting"
+run = "pnpm run lint"
+alias = "l"
+
+[tasks.typecheck]
+description = "Run typechecking"
+run = "pnpm run typecheck"
+
+[tasks.test]
+description = "Run unit tests"
+run = "pnpm run test"
+alias = "t"
+
+[tasks."test:ui"]
+description = "Run unit tests with UI"
+run = "pnpm run test:ui"
+
+[tasks."test:coverage"]
+description = "Run unit tests with coverage"
+run = "pnpm run test:coverage"
+
+[tasks."test:e2e"]
+description = "Run E2E tests"
+run = "pnpm run test:e2e"
+
+[tasks."test:e2e:ui"]
+description = "Run E2E tests with UI"
+run = "pnpm run test:e2e:ui"
+
+[tasks.verify]
+description = "Run all verification tasks"
+depends = ["lint", "typecheck", "test:coverage"]
+alias = "v"
+
+[tasks."playwright:install"]
+description = "Install Playwright browsers"
+run = "pnpm exec playwright install --with-deps"
+
+[tasks."docs:dev"]
+description = "Start documentation development server"
+run = "pnpm --filter docs dev"
+
+[tasks."docs:build"]
+description = "Build the documentation"
+run = "pnpm --filter docs build"
+
+[tasks.docs]
+description = "Serve the documentation"
+depends = ["docs:build"]
+run = "pnpm --filter docs start"
+
+[tasks."deploy:firebase"]
+description = "Deploy the site to Firebase"
+run = """
+pnpm add -g firebase-tools
+if [ "$FIREBASE_ENV" = "production" ]; then
+  pnpm exec firebase deploy --only hosting:site --token=$FIREBASE_TOKEN
+else
+  pnpm exec firebase hosting:channel:deploy site --expires 7d --token=$FIREBASE_TOKEN
+fi
+"""
+
+[tasks."deploy:render"]
+description = "Deploy the site to Render"
+run = """
+if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+  echo "Error: RENDER_DEPLOY_HOOK is not set." >&2
+  exit 1
+fi
+curl -f -X POST "$RENDER_DEPLOY_HOOK"
+"""
+
+[tasks."deploy:vercel"]
+description = "Deploy the site to Vercel"
+run = """
+pnpm exec vercel pull --yes --environment=$VERCEL_ENV --token=$VERCEL_TOKEN
+pnpm exec vercel build $([ "$VERCEL_ENV" = "production" ] && echo "--prod") --token=$VERCEL_TOKEN
+pnpm exec vercel deploy --prebuilt $([ "$VERCEL_ENV" = "production" ] && echo "--prod") --token=$VERCEL_TOKEN
+"""

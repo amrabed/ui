@@ -1,0 +1,48 @@
+# Environment Variables
+
+The project uses [Zod](https://zod.dev) for type-safe environment variable validation at startup.
+
+## Application Environment Variables
+
+Environment variables are validated against the `envSchema` defined in `app/lib/env.ts`.
+
+### `NODE_ENV`
+- **Type**: `'development' | 'production' | 'test'`
+- **Default**: `'development'`
+- **Description**: Standard environment mode indicator.
+
+### `BLOB_READ_WRITE_TOKEN`
+- **Type**: `string` (Optional)
+- **Format**: Must begin with `vercel_blob_rw_`
+- **Description**: Read/write token for Vercel Blob object storage.
+
+## Deployment Tokens (CI / Local Deployments)
+
+These tokens are used by deployment workflows in `.github/workflows/deploy.yml` and local deployment tasks defined in `.mise.toml`:
+
+- `VERCEL_TOKEN`: Authentication token for automated deployments using Vercel CLI.
+- `RENDER_DEPLOY_HOOK`: Webhook URL for triggering automated deployments to Render.
+- `FIREBASE_TOKEN`: Authentication token for deploying to Firebase Hosting via Firebase CLI.
+
+## Schema Definition
+
+```typescript
+import { z } from "zod";
+
+const envSchema = z.object({
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  BLOB_READ_WRITE_TOKEN: z
+    .string()
+    .min(1)
+    .startsWith("vercel_blob_rw_", "Token must start with 'vercel_blob_rw_'")
+    .optional(),
+});
+
+export const env = envSchema.parse({
+  NODE_ENV: process.env.NODE_ENV,
+  BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
+});
+
+export type Env = z.infer<typeof envSchema>;
+```
+
