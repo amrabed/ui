@@ -1,10 +1,6 @@
 name: Deploy Site
 
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - 'docs/**'
   workflow_dispatch:
     inputs:
       environment:
@@ -27,7 +23,7 @@ on:
 
 jobs:
   deploy-vercel:
-    if: ${{ secrets.VERCEL_TOKEN != '' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.provider == 'vercel')) }}
+    if: ${{ inputs.provider == 'vercel' }}
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment || 'production' }}
