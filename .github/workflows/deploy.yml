@@ -27,7 +27,7 @@ on:
 
 jobs:
   deploy-vercel:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.provider == 'vercel') }}
+    if: ${{ secrets.VERCEL_TOKEN != '' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.provider == 'vercel')) }}
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment || 'production' }}

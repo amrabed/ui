@@ -18,6 +18,7 @@ export interface HeaderProps {
   siteHomeHref?: string;
   avatarUrl?: string;
   navLinks?: NavLinkItem[];
+  navAriaLabel?: string;
   children?: React.ReactNode;
   className?: string;
 }
@@ -34,6 +35,7 @@ export function Header({
   siteHomeHref = "/",
   avatarUrl = AUTHOR.avatarUrl,
   navLinks,
+  navAriaLabel,
   children,
   className,
 }: HeaderProps) {
@@ -45,6 +47,10 @@ export function Header({
     (currentSite !== "home"
       ? currentSite.charAt(0).toUpperCase() + currentSite.slice(1)
       : undefined);
+
+  const resolvedNavLabel =
+    navAriaLabel ??
+    (resolvedSiteTitle ? `${resolvedSiteTitle} Navigation` : "Main Navigation");
 
   const navigationItems = navLinks ?? DEFAULT_ECOSYSTEM_NAV;
 
@@ -73,7 +79,8 @@ export function Header({
             <div className="relative w-8 h-8 rounded-full overflow-hidden border border-divider group-hover:border-primary transition-colors">
               <Image
                 src={avatarUrl}
-                alt={AUTHOR.name}
+                alt=""
+                aria-hidden="true"
                 fill
                 sizes="32px"
                 className="object-cover"
@@ -100,7 +107,7 @@ export function Header({
 
         {/* Center: Desktop Navigation */}
         <nav
-          aria-label="Main Navigation"
+          aria-label={resolvedNavLabel}
           className="hidden md:flex items-center justify-center gap-6"
         >
           {navigationItems.map((item) => {
