@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.0] - 2026-10-07
+
 ### Added
-- Initial cur8d implementation.
+- **Unified Header / NavBar (`NavBar`)**: Responsive breadcrumb branding (`Amr Abed / [Site]`), cross-site ecosystem navigation, mobile drawer menu, customizable action/children slots, and support for avatar or monogram branding (`logoType`).
+- **Brand Monogram Logo (`Logo`)**: Canonical vector SVG monogram component supporting dynamic theming via `fill="currentColor"`.
+- **Ecosystem Icon Assets & Metadata**: Bundled vector icons (`icon.svg`, `icon-light.svg`, `icon-dark.svg`, `apple-touch-icon.png`, 192px PNGs) and exported `ECOSYSTEM_ICONS` metadata helper for consumer sites.
+- **Unified Footer & Social Profiles (`Footer`, `Social`)**: Canonical copyright notice and verified social profiles across 8 platforms (LinkedIn, GitHub, Google Scholar, Medium, Stack Overflow, X, YouTube, Goodreads).
+- **3-Option Theme Switcher (`ThemeToggle`)**: System-aware light/dark/system mode toggle with accessible radiogroup controls.
+- **Design Tokens & Theme Styles**: Tailwind CSS v4 `@theme` tokens with canonical Indigo accent and high-contrast Slate/Zinc neutrals.
+- **Interactive Showcase & Documentation**: Next.js App Router live component showcase and Nextra documentation.
+- Comprehensive test coverage across 19 unit test suites (70 tests) and Playwright accessibility (a11y) E2E audits.
