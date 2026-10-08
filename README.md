@@ -60,7 +60,7 @@ Import the canonical stylesheet in your root layout or CSS:
 
 ```css
 /* app/globals.css */
-@import "@amrabed/ui/globals.css";
+@import "@amrabed/ui";
 ```
 
 ### 3. Layout Usage
@@ -68,7 +68,7 @@ Wrap your application in `Providers` and mount `Header` and `Footer`:
 
 ```tsx
 // app/layout.tsx
-import "@amrabed/ui/globals.css";
+import "@amrabed/ui";
 import { Header, Footer, Providers } from "@amrabed/ui";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
