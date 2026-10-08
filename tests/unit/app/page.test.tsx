@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import Page from "@/page";
-import { describe, it, expect, vi } from "vitest";
 
 vi.mock("next-themes", () => ({
   useTheme: vi.fn().mockReturnValue({

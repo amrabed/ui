@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { Social } from "@/ui/components/Social";
-import { describe, it, expect } from "vitest";
 
 describe("Social Component", () => {
   it("renders default social profiles with tooltips, rel me, and brand hover styles", () => {

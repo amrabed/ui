@@ -1,7 +1,7 @@
-import { Header } from "@/ui/components/Header";
 import { Footer } from "@/ui/components/Footer";
+import { NavBar } from "@/ui/components/NavBar";
 import { ThemeToggle } from "@/ui/components/ThemeToggle";
-import { ECOSYSTEM_SITES, DEFAULT_PROFILES } from "@/ui/constants";
+import { DEFAULT_PROFILES, ECOSYSTEM_SITES } from "@/ui/constants";
 
 export default function Page() {
   return (
@@ -27,9 +27,9 @@ export default function Page() {
       {/* Header Previews */}
       <section className="flex flex-col gap-6">
         <div>
-          <h2 className="text-xl font-bold text-heading">Header Navigation Previews</h2>
+          <h2 className="text-xl font-bold text-heading">NavBar Navigation Previews</h2>
           <p className="text-sm text-muted">
-            Responsive breadcrumb header with ecosystem switching and dark/light mode toggle.
+            Responsive breadcrumb navbar with ecosystem switching and dark/light mode toggle.
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export default function Page() {
               1. Home Site State (amrabed.com)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header currentSite="home" showLogo={false} navAriaLabel="Home Showcase Navigation" />
+              <NavBar currentSite="home" showLogo={false} navAriaLabel="Home Showcase Navigation" />
             </div>
           </div>
 
@@ -48,7 +48,7 @@ export default function Page() {
               2. Blog Site State (amrabed.com/blog)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header
+              <NavBar
                 currentSite="blog"
                 repo="amrabed/blog"
                 navAriaLabel="Blog Showcase Navigation"
@@ -56,7 +56,7 @@ export default function Page() {
                 <span className="hidden sm:inline-block text-xs px-2.5 py-1 rounded-full bg-surface border border-divider text-muted">
                   Custom Children (Search / Actions)
                 </span>
-              </Header>
+              </NavBar>
             </div>
           </div>
 
@@ -65,7 +65,7 @@ export default function Page() {
               3. Courses Site State (amrabed.com/courses)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header
+              <NavBar
                 currentSite="courses"
                 repo="amrabed/courses"
                 navAriaLabel="Courses Showcase Navigation"

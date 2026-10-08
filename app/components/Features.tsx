@@ -1,5 +1,5 @@
 import { Card } from "@heroui/react";
-import { Shield, Zap, Globe } from "lucide-react";
+import { Globe, Shield, Zap } from "lucide-react";
 
 export function Features() {
   return (

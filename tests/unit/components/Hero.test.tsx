@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { Hero } from "@/components/Hero";
-import { describe, it, expect, vi } from "vitest";
 
 // Mock CodeSnippet because it might use navigator.clipboard which is not available in jsdom or needs mocking
 vi.mock("@/components/CodeSnippet", () => ({

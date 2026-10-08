@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, Copy, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { Button, Tooltip } from "@heroui/react";
+import { AlertCircle, Check, Copy } from "lucide-react";
+
 import { reportError } from "@/lib/error-reporting";
 
 interface CodeSnippetProps {

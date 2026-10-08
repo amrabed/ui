@@ -1,8 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { RouterProvider } from "@heroui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { useRouter } from "next/navigation";
+
 import { SearchProvider } from "@/hooks/use-search-state";
 
 interface ProvidersProps {

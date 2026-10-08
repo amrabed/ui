@@ -1,6 +1,6 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
-test.describe("Header", () => {
+test.describe("NavBar", () => {
   test("should have a brand link pointing to amrabed.com", async ({ page }) => {
     await page.goto("/");
     const brandLink = page.getByRole("link", { name: "Amr Abed" }).first();

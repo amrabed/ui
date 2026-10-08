@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileQuestion, ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileQuestion } from "lucide-react";
 
 export default function NotFound() {
   return (
