@@ -39,7 +39,7 @@ export default function Page() {
               1. Home Site State (amrabed.com)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header currentSite="home" navAriaLabel="Home Showcase Navigation" />
+              <Header currentSite="home" showLogo={false} navAriaLabel="Home Showcase Navigation" />
             </div>
           </div>
 
@@ -48,7 +48,15 @@ export default function Page() {
               2. Blog Site State (amrabed.com/blog)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header currentSite="blog" navAriaLabel="Blog Showcase Navigation" />
+              <Header
+                currentSite="blog"
+                repo="amrabed/blog"
+                navAriaLabel="Blog Showcase Navigation"
+              >
+                <span className="hidden sm:inline-block text-xs px-2.5 py-1 rounded-full bg-surface border border-divider text-muted">
+                  Custom Children (Search / Actions)
+                </span>
+              </Header>
             </div>
           </div>
 
@@ -57,7 +65,11 @@ export default function Page() {
               3. Courses Site State (amrabed.com/courses)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header currentSite="courses" navAriaLabel="Courses Showcase Navigation" />
+              <Header
+                currentSite="courses"
+                repo="amrabed/courses"
+                navAriaLabel="Courses Showcase Navigation"
+              />
             </div>
           </div>
         </div>
