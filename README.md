@@ -12,7 +12,7 @@ Built on **Next.js 16**, **React 19**, **Tailwind CSS v4**, and **HeroUI**.
 
 - **Unified Header**: Responsive breadcrumb branding (`Amr Abed / [Site]`), cross-site ecosystem navigation, mobile drawer menu, and slot for site-specific extras (search, RSS).
 - **Unified Footer**: Canonical copyright notice, verified social profiles (LinkedIn, GitHub, Google Scholar, Medium, Stack Overflow, X, YouTube, Goodreads), and accessible tooltips.
-- **Unified Brand Monogram & Icons**: Canonical SVG geometric monogram component (`<Logo />`) and static icon assets (`icon.svg`, `apple-touch-icon.png`, dark/light variants) for favicons and app icons across the web ecosystem.
+- **Unified Brand Monogram**: Canonical SVG geometric monogram component (`<Logo />`) and `ECOSYSTEM_ICONS` metadata helper for favicons and app icons across the web ecosystem.
 - **Unified Color Palette**: Canonical Indigo accent (`#4f46e5` / `#6366f1`) and Slate/Zinc neutrals configured via Tailwind v4 `@theme` and `@layer base`.
 - **System-Aware Theme Switching**: Dark/light mode switcher powered by `next-themes` and HeroUI compound components.
 - **Interactive Showcase**: Next.js App Router live preview displaying all header states, tokens, and components.
@@ -35,7 +35,6 @@ Built on **Next.js 16**, **React 19**, **Tailwind CSS v4**, and **HeroUI**.
 │   │   └── globals.css      # Canonical Tailwind v4 @theme and Indigo+Slate tokens
 │   ├── constants/           # Ecosystem URLs, verified social profiles, metadata, icons
 │   └── index.ts             # Main library entry point
-├── public/                  # Unified icon assets (icon.svg, apple-touch-icon.png, etc.)
 ├── app/                     # Interactive Next.js showcase & style guide
 ├── tests/
 │   ├── unit/                # Vitest unit test suite (19 suites, 70 tests)

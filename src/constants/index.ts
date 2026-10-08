@@ -75,11 +75,11 @@ export const AUTHOR = {
 
 export const ECOSYSTEM_ICONS = {
   icon: [
-    { url: "/icon.svg", type: "image/svg+xml" },
-    { url: "/icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
-    { url: "/icon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+    { url: "https://amrabed.com/icon.svg", type: "image/svg+xml" },
+    { url: "https://amrabed.com/icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+    { url: "https://amrabed.com/icon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
   ],
   apple: [
-    { url: "/apple-touch-icon.png", sizes: "180x180" },
+    { url: "https://amrabed.com/apple-touch-icon.png", sizes: "180x180" },
   ],
 };
