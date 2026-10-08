@@ -1,53 +1,72 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Button, Tooltip } from "@heroui/react";
-import { Sun, Moon } from "lucide-react";
+import {
+  HiOutlineSun,
+  HiOutlineMoon,
+  HiOutlineComputerDesktop,
+} from "react-icons/hi2";
 
-export interface ThemeToggleProps {
+export type ThemeMode = "light" | "dark" | "system";
+
+export interface ThemeSwitchProps {
   className?: string;
+  ariaLabel?: string;
 }
 
-export function ThemeToggle({ className }: ThemeToggleProps) {
-  const { setTheme, resolvedTheme } = useTheme();
+const OPTIONS: {
+  mode: ThemeMode;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+}[] = [
+  { mode: "light", label: "Light theme", icon: HiOutlineSun },
+  { mode: "dark", label: "Dark theme", icon: HiOutlineMoon },
+  { mode: "system", label: "System theme", icon: HiOutlineComputerDesktop },
+];
+
+export function ThemeSwitch({
+  className = "",
+  ariaLabel = "Theme selector",
+}: ThemeSwitchProps) {
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const targetTheme = resolvedTheme === "dark" ? "light" : "dark";
-  const label = mounted ? `Switch to ${targetTheme} theme` : "Toggle theme";
-
   return (
-    <Tooltip delay={200} closeDelay={0}>
-      <Tooltip.Trigger
-        render={(props: React.HTMLAttributes<Element>) => (
-          <Button
-            {...props}
-            isIconOnly
-            variant="ghost"
+    <div
+      role="radiogroup"
+      aria-label={ariaLabel}
+      className={`inline-flex items-center rounded-full bg-slate-200/80 dark:bg-slate-800/80 p-0.5 border border-slate-300/60 dark:border-slate-700/60 shadow-inner ${className}`}
+    >
+      {OPTIONS.map(({ mode, label, icon: Icon }) => {
+        const isSelected = mounted ? theme === mode : mode === "system";
+        return (
+          <button
+            key={mode}
+            type="button"
+            role="radio"
+            aria-checked={isSelected}
             aria-label={label}
-            className={`size-9 rounded-full focus-visible:ring-2 focus-visible:ring-primary text-muted hover:text-primary transition-colors ${className ?? ""}`}
-            onClick={(e: React.MouseEvent<Element>) => {
-              props.onClick?.(e);
-              if (mounted) setTheme(targetTheme);
-            }}
+            onClick={() => setTheme(mode)}
+            className={`relative flex items-center justify-center p-1.5 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+              isSelected
+                ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
+            }`}
           >
-            {!mounted ? (
-              <span className="size-4" />
-            ) : resolvedTheme === "dark" ? (
-              <Sun className="size-4" aria-hidden="true" />
-            ) : (
-              <Moon className="size-4" aria-hidden="true" />
-            )}
-          </Button>
-        )}
-      />
-      <Tooltip.Content>{label}</Tooltip.Content>
-    </Tooltip>
+            <Icon className="size-4" />
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
-export default ThemeToggle;
+export const ThemeToggle = ThemeSwitch;
+export type ThemeToggleProps = ThemeSwitchProps;
+
+export default ThemeSwitch;
