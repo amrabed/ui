@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Tooltip } from "@heroui/react";
 import { FaGithub } from "react-icons/fa6";
-import { ThemeToggle } from "../ThemeToggle";
-import { ECOSYSTEM_SITES, AUTHOR } from "../../constants";
+import { ThemeToggle } from "./ThemeToggle";
+import { ECOSYSTEM_SITES, AUTHOR } from "../constants";
 
 export interface NavLinkItem {
   name: string;

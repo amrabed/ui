@@ -12,7 +12,7 @@ import {
   FaYoutube,
   FaGoodreadsG,
 } from "react-icons/fa6";
-import { DEFAULT_PROFILES } from "../../constants";
+import { DEFAULT_PROFILES } from "../constants";
 
 export interface SocialProfileItem {
   name: string;
