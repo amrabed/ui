@@ -48,7 +48,11 @@ export default function Page() {
               2. Blog Site State (amrabed.com/blog)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header currentSite="blog" navAriaLabel="Blog Showcase Navigation" />
+              <Header currentSite="blog" navAriaLabel="Blog Showcase Navigation">
+                <span className="hidden sm:inline-block text-xs px-2.5 py-1 rounded-full bg-surface border border-divider text-muted">
+                  Custom Children (Search / Actions)
+                </span>
+              </Header>
             </div>
           </div>
 

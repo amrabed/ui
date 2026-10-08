@@ -69,4 +69,19 @@ describe("Header / Navbar", () => {
     });
     expect(themeSelector).toBeInTheDocument();
   });
+
+  it("renders custom children passed to Header", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    render(
+      <Header currentSite="blog">
+        <div data-testid="custom-search-widget">Custom Search</div>
+      </Header>,
+    );
+
+    expect(screen.getByTestId("custom-search-widget")).toBeInTheDocument();
+  });
 });
