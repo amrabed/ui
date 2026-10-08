@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { useTheme } from "next-themes";
 import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 
@@ -164,5 +164,44 @@ describe("NavBar Component", () => {
     expect(nav.className).toContain("absolute");
     expect(nav.className).toContain("left-1/2");
     expect(nav.className).toContain("-translate-x-1/2");
+  });
+
+  it("handles showOnScroll visibility and anchor navigation", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+    window.scrollTo = vi.fn();
+
+    const { container } = render(
+      <NavBar
+        showOnScroll
+        authorHref="#home"
+        navLinks={[{ name: "About", href: "#about" }]}
+      />,
+    );
+    const header = container.querySelector("header");
+    expect(header).toHaveClass("-translate-y-full");
+    expect(header).toHaveClass("opacity-0");
+
+    // Scroll down
+    act(() => {
+      window.scrollY = 100;
+      window.dispatchEvent(new Event("scroll"));
+    });
+    expect(header).toHaveClass("translate-y-0");
+    expect(header).toHaveClass("opacity-100");
+
+    // Click author brand link
+    const brandLink = screen.getByRole("link", { name: /Amr Abed/i });
+    brandLink.click();
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
+
+    // Click section nav link
+    const aboutLink = screen.getByRole("link", { name: "About" });
+    const mockElement = { offsetTop: 500 } as HTMLElement;
+    vi.spyOn(document, "getElementById").mockReturnValue(mockElement);
+    aboutLink.click();
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 400, behavior: "smooth" });
   });
 });

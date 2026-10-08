@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Tooltip } from "@heroui/react";
@@ -34,6 +34,7 @@ export interface NavBarProps {
   children?: React.ReactNode;
   mobileContent?: React.ReactNode;
   className?: string;
+  showOnScroll?: boolean;
 }
 
 export type HeaderProps = NavBarProps;
@@ -63,8 +64,22 @@ export function NavBar({
   children,
   mobileContent,
   className,
+  showOnScroll = false,
 }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!showOnScroll) return;
+
+    const handleWindowScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+
+    handleWindowScroll();
+    window.addEventListener("scroll", handleWindowScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleWindowScroll);
+  }, [showOnScroll]);
 
   // Compute displayed subsite label if not explicitly provided
   const resolvedSiteTitle =
@@ -107,9 +122,33 @@ export function NavBar({
   const hasMobileDrawer =
     (shouldRenderNav && navigationItems.length > 0) || Boolean(mobileContent);
 
+  const handleAnchorClick = (e: React.MouseEvent, href: string) => {
+    if (href === "#" || href === "#home") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (href.startsWith("#")) {
+      e.preventDefault();
+      const target = document.getElementById(href.substring(1));
+      if (target) {
+        window.scrollTo({
+          top: target.offsetTop - 100,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
+
   return (
     <header
-      className={`sticky top-0 z-40 w-full backdrop-blur-md bg-background/80 border-b border-divider transition-colors duration-300 ${
+      className={`${
+        showOnScroll
+          ? `fixed top-0 transition-all duration-300 ${
+              isScrolled
+                ? "translate-y-0 opacity-100 pointer-events-auto"
+                : "-translate-y-full opacity-0 pointer-events-none"
+            }`
+          : "sticky top-0"
+      } z-40 w-full backdrop-blur-md bg-background/80 border-b border-divider transition-colors duration-300 ${
         className ?? ""
       }`}
     >
@@ -118,6 +157,11 @@ export function NavBar({
         <div className="flex items-center gap-3 shrink-0">
           <a
             href={authorHref}
+            onClick={
+              authorHref?.startsWith("#")
+                ? (e) => handleAnchorClick(e, authorHref)
+                : undefined
+            }
             className="group flex items-center gap-2.5 text-sm font-medium text-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
             title={`Return to ${authorName}`}
           >
@@ -171,6 +215,11 @@ export function NavBar({
                 <a
                   key={item.name}
                   href={item.href}
+                  onClick={
+                    item.href?.startsWith("#")
+                      ? (e) => handleAnchorClick(e, item.href)
+                      : undefined
+                  }
                   className={`text-sm font-medium transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md px-1.5 py-1 ${
                     active ? "text-primary font-semibold" : "text-muted"
                   }`}
@@ -264,7 +313,12 @@ export function NavBar({
                   <li key={item.name}>
                     <a
                       href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={(e) => {
+                        setIsMenuOpen(false);
+                        if (item.href?.startsWith("#")) {
+                          handleAnchorClick(e, item.href);
+                        }
+                      }}
                       className={`block py-2 px-3 rounded-lg text-base font-medium transition-colors hover:text-primary hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                         active ? "text-primary font-bold bg-surface" : "text-muted"
                       }`}
