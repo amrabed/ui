@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { Footer } from "@/ui/components/Footer";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 describe("Footer", () => {
   beforeEach(() => {

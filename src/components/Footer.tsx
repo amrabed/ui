@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Social, BRAND_HOVER_COLORS, type SocialProfileItem } from "../Social";
-import { DEFAULT_PROFILES } from "../../constants";
+
+import { BRAND_HOVER_COLORS, Social, type SocialProfileItem } from "@/ui/components/Social";
+import { DEFAULT_PROFILES } from "@/ui/constants";
 
 export { BRAND_HOVER_COLORS };
 export type { SocialProfileItem };

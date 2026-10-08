@@ -1,13 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import { Header } from "@/ui/components/Header";
 import { useTheme } from "next-themes";
-import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
+import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+
+import { NavBar } from "@/ui/components/NavBar";
 
 vi.mock("next-themes", () => ({
   useTheme: vi.fn(),
 }));
 
-describe("Header / Navbar", () => {
+describe("NavBar Component", () => {
   const setTheme = vi.fn();
 
   beforeEach(() => {
@@ -20,7 +21,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header />);
+    render(<NavBar />);
 
     const brandLink = screen.getByRole("link", { name: /Amr Abed/i });
     expect(brandLink).toBeInTheDocument();
@@ -33,7 +34,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header currentSite="blog" />);
+    render(<NavBar currentSite="blog" />);
 
     const homeLinks = screen.getAllByRole("link", { name: "Home" });
     const blogLinks = screen.getAllByRole("link", { name: "Blog" });
@@ -50,7 +51,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header currentSite="courses" />);
+    render(<NavBar currentSite="courses" />);
 
     const breadcrumbs = screen.getAllByRole("link", { name: "Courses" });
     expect(breadcrumbs.length).toBeGreaterThan(0);
@@ -62,7 +63,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header />);
+    render(<NavBar />);
 
     const themeSelector = screen.getByRole("radiogroup", {
       name: "Theme selector",
@@ -70,16 +71,16 @@ describe("Header / Navbar", () => {
     expect(themeSelector).toBeInTheDocument();
   });
 
-  it("renders custom children passed to Header", () => {
+  it("renders custom children passed to NavBar", () => {
     (useTheme as Mock).mockReturnValue({
       theme: "light",
       setTheme,
     });
 
     render(
-      <Header currentSite="blog">
+      <NavBar currentSite="blog">
         <div data-testid="custom-search-widget">Custom Search</div>
-      </Header>,
+      </NavBar>,
     );
 
     expect(screen.getByTestId("custom-search-widget")).toBeInTheDocument();
@@ -91,7 +92,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    const { container } = render(<Header showLogo={false} />);
+    const { container } = render(<NavBar showLogo={false} />);
     const images = container.querySelectorAll("img");
     expect(images.length).toBe(0);
   });
@@ -102,7 +103,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header logo={<span data-testid="custom-brand-logo">Logo</span>} />);
+    render(<NavBar logo={<span data-testid="custom-brand-logo">Logo</span>} />);
     expect(screen.getByTestId("custom-brand-logo")).toBeInTheDocument();
   });
 
@@ -112,7 +113,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header />);
+    render(<NavBar />);
     expect(screen.queryByLabelText(/GitHub repository/i)).not.toBeInTheDocument();
   });
 
@@ -122,19 +123,19 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    const { rerender } = render(<Header repo="ui" />);
+    const { rerender } = render(<NavBar repo="ui" />);
     const repoLink = screen.getByLabelText(/GitHub repository/i);
     expect(repoLink).toBeInTheDocument();
     expect(repoLink).toHaveAttribute("href", "https://github.com/amrabed/ui");
     expect(repoLink).toHaveAttribute("target", "_blank");
 
-    rerender(<Header repo="amrabed/blog" />);
+    rerender(<NavBar repo="amrabed/blog" />);
     expect(screen.getByLabelText(/GitHub repository/i)).toHaveAttribute(
       "href",
       "https://github.com/amrabed/blog",
     );
 
-    rerender(<Header repo="https://github.com/custom/repo" />);
+    rerender(<NavBar repo="https://github.com/custom/repo" />);
     expect(screen.getByLabelText(/GitHub repository/i)).toHaveAttribute(
       "href",
       "https://github.com/custom/repo",
@@ -147,7 +148,7 @@ describe("Header / Navbar", () => {
       setTheme,
     });
 
-    render(<Header currentSite="home" />);
+    render(<NavBar currentSite="home" />);
     const nav = screen.getByRole("navigation", { name: "Main Navigation" });
     expect(nav.className).toContain("absolute");
     expect(nav.className).toContain("left-1/2");

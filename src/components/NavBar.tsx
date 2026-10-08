@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Tooltip } from "@heroui/react";
 import { FaGithub } from "react-icons/fa6";
-import { ThemeToggle } from "../ThemeToggle";
-import { ECOSYSTEM_SITES, AUTHOR } from "../../constants";
+
+import { ThemeToggle } from "@/ui/components/ThemeToggle";
+import { AUTHOR, ECOSYSTEM_SITES } from "@/ui/constants";
 
 export interface NavLinkItem {
   name: string;
@@ -14,7 +15,7 @@ export interface NavLinkItem {
   external?: boolean;
 }
 
-export interface HeaderProps {
+export interface NavBarProps {
   currentSite?: "home" | "blog" | "courses";
   siteTitle?: string;
   siteHomeHref?: string;
@@ -33,13 +34,16 @@ export interface HeaderProps {
   className?: string;
 }
 
+export type HeaderProps = NavBarProps;
+export type NavbarProps = NavBarProps;
+
 const DEFAULT_ECOSYSTEM_NAV: NavLinkItem[] = [
   { name: "Home", href: ECOSYSTEM_SITES.home.url },
   { name: "Blog", href: ECOSYSTEM_SITES.blog.url },
   { name: "Courses", href: ECOSYSTEM_SITES.courses.url },
 ];
 
-export function Header({
+export function NavBar({
   currentSite = "home",
   siteTitle,
   siteHomeHref = "/",
@@ -56,7 +60,7 @@ export function Header({
   children,
   mobileContent,
   className,
-}: HeaderProps) {
+}: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Compute displayed subsite label if not explicitly provided
@@ -272,4 +276,6 @@ export function Header({
   );
 }
 
-export default Header;
+export const Header = NavBar;
+export const Navbar = NavBar;
+export default NavBar;

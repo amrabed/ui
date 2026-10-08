@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { RouterProvider } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { RouterProvider } from "@heroui/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-export interface ProvidersProps {
+import { SearchProvider } from "@/hooks/use-search-state";
+
+interface ProvidersProps {
   children: React.ReactNode;
 }
 
@@ -13,12 +14,12 @@ export function Providers({ children }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <RouterProvider navigate={router?.push}>
+    <RouterProvider navigate={router.push}>
       <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
-        {children}
+        <SearchProvider>
+          {children}
+        </SearchProvider>
       </NextThemesProvider>
     </RouterProvider>
   );
 }
-
-export default Providers;

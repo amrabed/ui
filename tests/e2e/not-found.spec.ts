@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("NotFound page E2E", () => {
   test("should display 404 page for non-existent route", async ({ page }) => {

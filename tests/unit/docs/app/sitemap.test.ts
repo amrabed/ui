@@ -1,8 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach, Mock } from "vitest";
-import sitemap from "@docs/app/sitemap";
-import type { MetadataRoute } from "next";
 import fs from "node:fs";
 import path from "node:path";
+import type { MetadataRoute } from "next";
+import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+
+import sitemap from "@docs/app/sitemap";
 
 vi.mock("node:fs", () => ({
   default: {

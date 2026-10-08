@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import { Providers } from "@/components/Providers";
-import { useTheme } from "next-themes";
-import { useSearchState } from "@/hooks/use-search-state";
-import { useRouter } from "next/navigation";
-import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { render, screen } from "@testing-library/react";
+import { useTheme } from "next-themes";
+import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+
+import { Providers } from "@/components/Providers";
+import { useSearchState } from "@/hooks/use-search-state";
 
 // Mock next/navigation
 vi.mock("next/navigation", () => ({

@@ -4,15 +4,16 @@ import React from "react";
 import { Tooltip } from "@heroui/react";
 import {
   FaGithub,
+  FaGoodreadsG,
   FaGoogleScholar,
   FaLinkedinIn,
   FaMedium,
   FaStackOverflow,
   FaXTwitter,
   FaYoutube,
-  FaGoodreadsG,
 } from "react-icons/fa6";
-import { DEFAULT_PROFILES } from "../../constants";
+
+import { DEFAULT_PROFILES } from "@/ui/constants";
 
 export interface SocialProfileItem {
   name: string;

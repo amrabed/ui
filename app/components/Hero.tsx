@@ -1,6 +1,7 @@
-import { SiGithub } from "@icons-pack/react-simple-icons";
 import Link from "next/link";
-import { ExternalLink, BookOpen } from "lucide-react";
+import { BookOpen, ExternalLink } from "lucide-react";
+import { SiGithub } from "@icons-pack/react-simple-icons";
+
 import { CodeSnippet } from "@/components/CodeSnippet";
 
 export function Hero() {

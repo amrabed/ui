@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import {
-  HiOutlineSun,
-  HiOutlineMoon,
   HiOutlineComputerDesktop,
+  HiOutlineMoon,
+  HiOutlineSun,
 } from "react-icons/hi2";
 
 export type ThemeMode = "light" | "dark" | "system";
