@@ -18,6 +18,9 @@ export interface SocialProfileItem {
   name: string;
   url: string;
   icon?: React.ReactNode;
+  color?: string;
+  hoverColor?: string;
+  hoverColorDark?: string;
 }
 
 export interface FooterProps {
@@ -26,6 +29,18 @@ export interface FooterProps {
   profiles?: readonly SocialProfileItem[];
   className?: string;
 }
+
+export const BRAND_HOVER_COLORS: Record<string, { light: string; dark: string }> = {
+  LinkedIn: { light: "#0A66C2", dark: "#0A66C2" },
+  GitHub: { light: "#000000", dark: "#f4f4f5" },
+  "Google Scholar": { light: "#4285F4", dark: "#4285F4" },
+  Medium: { light: "#000000", dark: "#f4f4f5" },
+  "Stack Overflow": { light: "#F58025", dark: "#F58025" },
+  X: { light: "#000000", dark: "#f4f4f5" },
+  YouTube: { light: "#FF0000", dark: "#FF0000" },
+  Goodreads: { light: "#372213", dark: "#f4f1ea" },
+  StackShare: { light: "#0690FA", dark: "#0690FA" },
+};
 
 const DEFAULT_ICONS: Record<string, React.ReactNode> = {
   LinkedIn: <FaLinkedinIn className="size-4" aria-hidden="true" />,
@@ -69,30 +84,53 @@ export function Footer({
         <div className="flex flex-row flex-wrap justify-center gap-2 order-1 md:order-2">
           {profiles.map((profile) => {
             const icon = profile.icon ?? DEFAULT_ICONS[profile.name];
+            const brand = BRAND_HOVER_COLORS[profile.name];
+            const hoverLight = profile.hoverColor ?? profile.color ?? brand?.light;
+            const hoverDark =
+              profile.hoverColorDark ??
+              (profile.color
+                ? profile.name === "Goodreads"
+                  ? "#f4f1ea"
+                  : profile.name === "GitHub" || profile.name === "Medium" || profile.name === "X"
+                    ? "#f4f4f5"
+                    : profile.color
+                : brand?.dark);
+
+            const style = hoverLight
+              ? ({
+                  "--social-hover-color": hoverLight,
+                  "--social-hover-color-dark": hoverDark ?? hoverLight,
+                } as React.CSSProperties)
+              : undefined;
+
             return (
               <Tooltip key={profile.name} delay={200} closeDelay={0}>
                 <Tooltip.Trigger
                   render={(triggerProps: React.HTMLAttributes<Element>) => (
                     <a
+                      {...triggerProps}
                       href={profile.url}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer me"
                       className="inline-flex"
                     >
                       <Button
-                        {...triggerProps}
                         variant="ghost"
                         size="sm"
                         isIconOnly
                         aria-label={`${profile.name} (opens in a new tab)`}
-                        className="text-muted hover:text-primary rounded-full size-9 transition-colors"
+                        className="text-muted rounded-full transition-colors hover:text-[var(--social-hover-color)] dark:hover:text-[var(--social-hover-color-dark,var(--social-hover-color))]"
+                        style={style}
                       >
                         {icon ?? <span className="text-xs">{profile.name[0]}</span>}
                       </Button>
                     </a>
                   )}
                 />
-                <Tooltip.Content>{profile.name}</Tooltip.Content>
+                <Tooltip.Content>
+                  <Tooltip.Arrow />
+                  {profile.name}
+                </Tooltip.Content>
               </Tooltip>
             );
           })}

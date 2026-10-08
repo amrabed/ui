@@ -22,10 +22,15 @@ describe("Footer", () => {
     expect(footerText).toBeInTheDocument();
   });
 
-  it("renders social links with tooltips", () => {
+  it("renders social links with tooltips, rel me, and brand hover variables", () => {
     render(<Footer />);
 
-    expect(screen.getByLabelText(/LinkedIn/i)).toBeInTheDocument();
+    const linkedIn = screen.getByLabelText(/LinkedIn/i);
+    expect(linkedIn).toBeInTheDocument();
+    const link = linkedIn.closest("a");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer me");
+    expect(linkedIn).toHaveStyle({ "--social-hover-color": "#0A66C2" });
+
     expect(screen.getByLabelText(/GitHub/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Google Scholar/i)).toBeInTheDocument();
   });
