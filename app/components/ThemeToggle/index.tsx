@@ -1,4 +1,2 @@
-import { ThemeToggle } from "@/ui/components/ThemeToggle";
-
-export { ThemeToggle };
-export default ThemeToggle;
+export { ThemeToggle, ThemeSwitch } from "@/ui/components/ThemeToggle";
+export { default } from "@/ui/components/ThemeToggle";

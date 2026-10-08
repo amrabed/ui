@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeSwitch, ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "next-themes";
 import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 
@@ -7,50 +7,65 @@ vi.mock("next-themes", () => ({
   useTheme: vi.fn(),
 }));
 
-describe("ThemeToggle", () => {
+describe("ThemeSwitch / ThemeToggle", () => {
   const setTheme = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("renders correctly with target theme label", () => {
+  it("renders a radiogroup with light, dark, and system options", () => {
     (useTheme as Mock).mockReturnValue({
-      resolvedTheme: "light",
+      theme: "light",
       setTheme,
     });
 
-    render(<ThemeToggle />);
+    render(<ThemeSwitch />);
 
-    // When light, it should suggest switching to dark
-    const button = screen.getByLabelText("Switch to dark theme");
-    expect(button).toBeInTheDocument();
+    const group = screen.getByRole("radiogroup", { name: "Theme selector" });
+    expect(group).toBeInTheDocument();
+
+    const lightOption = screen.getByRole("radio", { name: "Light theme" });
+    const darkOption = screen.getByRole("radio", { name: "Dark theme" });
+    const systemOption = screen.getByRole("radio", { name: "System theme" });
+
+    expect(lightOption).toBeInTheDocument();
+    expect(darkOption).toBeInTheDocument();
+    expect(systemOption).toBeInTheDocument();
+
+    expect(lightOption).toHaveAttribute("aria-checked", "true");
+    expect(darkOption).toHaveAttribute("aria-checked", "false");
+    expect(systemOption).toHaveAttribute("aria-checked", "false");
   });
 
-  it("switches theme when clicked", () => {
+  it("calls setTheme with selected theme mode on click", () => {
     (useTheme as Mock).mockReturnValue({
-      resolvedTheme: "light",
+      theme: "light",
       setTheme,
     });
 
     render(<ThemeToggle />);
 
-    const button = screen.getByLabelText("Switch to dark theme");
-    fireEvent.click(button);
+    const darkOption = screen.getByRole("radio", { name: "Dark theme" });
+    fireEvent.click(darkOption);
 
     expect(setTheme).toHaveBeenCalledWith("dark");
+
+    const systemOption = screen.getByRole("radio", { name: "System theme" });
+    fireEvent.click(systemOption);
+
+    expect(setTheme).toHaveBeenCalledWith("system");
   });
 
-  it("shows correct label when theme is dark", () => {
+  it("reflects dark mode selection accurately", () => {
     (useTheme as Mock).mockReturnValue({
-      resolvedTheme: "dark",
+      theme: "dark",
       setTheme,
     });
 
-    render(<ThemeToggle />);
+    render(<ThemeSwitch />);
 
-    // When dark, it should suggest switching to light
-    const button = screen.getByLabelText("Switch to light theme");
-    expect(button).toBeInTheDocument();
+    const darkOption = screen.getByRole("radio", { name: "Dark theme" });
+    expect(darkOption).toHaveAttribute("aria-checked", "true");
   });
 });

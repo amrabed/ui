@@ -56,17 +56,17 @@ describe("Header / Navbar", () => {
     expect(breadcrumbs.length).toBeGreaterThan(0);
   });
 
-  it("renders the theme toggle", () => {
+  it("renders the theme toggle selector", () => {
     (useTheme as Mock).mockReturnValue({
-      resolvedTheme: "light",
+      theme: "light",
       setTheme,
     });
 
     render(<Header />);
 
-    const themeToggle =
-      screen.queryByLabelText(/Switch to (dark|light) theme/) ||
-      screen.getByLabelText("Toggle theme");
-    expect(themeToggle).toBeInTheDocument();
+    const themeSelector = screen.getByRole("radiogroup", {
+      name: "Theme selector",
+    });
+    expect(themeSelector).toBeInTheDocument();
   });
 });
