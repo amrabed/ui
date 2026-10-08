@@ -6,7 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "@/components/Providers";
 import { Footer } from "@/ui/components/Footer";
 import { NavBar } from "@/ui/components/NavBar";
-import { ECOSYSTEM_ICONS } from "@/ui/constants";
+import { icons } from "@/ui/constants";
 
 import "./globals.css";
 
@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Amr Abed UI",
   description: "Shared UI chrome, design tokens, and components for Amr Abed's web ecosystem",
-  icons: ECOSYSTEM_ICONS,
+  icons,
 };
 
 interface RootLayoutProps {

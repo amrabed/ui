@@ -73,13 +73,26 @@ export const AUTHOR = {
   avatarUrl: "https://amrabed.com/amrabed.webp",
 };
 
-export const ECOSYSTEM_ICONS = {
+export const BRAND_URL = "https://amrabed.com/brand";
+
+export const icons = {
   icon: [
-    { url: "/icon.svg", type: "image/svg+xml" },
-    { url: "/icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
-    { url: "/icon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+    { url: `${BRAND_URL}/icon.svg`, type: "image/svg+xml" },
+    {
+      url: `${BRAND_URL}/icon-light.svg`,
+      type: "image/svg+xml",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      url: `${BRAND_URL}/icon-dark.svg`,
+      type: "image/svg+xml",
+      media: "(prefers-color-scheme: dark)",
+    },
   ],
   apple: [
-    { url: "/apple-touch-icon.png", sizes: "180x180" },
+    { url: `${BRAND_URL}/apple-touch-icon.png`, sizes: "180x180" },
   ],
 };
+
+/** @deprecated Use `icons` instead */
+export const ECOSYSTEM_ICONS = icons;
