@@ -13,8 +13,7 @@
     "./globals.css": "./src/styles/globals.css"
   },
   "files": [
-    "src",
-    "public"
+    "src"
   ],
   "packageManager": "pnpm@11.22.0",
   "scripts": {
