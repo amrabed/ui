@@ -1,42 +1,18 @@
 "use client";
 
 import React from "react";
-import { Button, Tooltip } from "@heroui/react";
-import {
-  FaGithub,
-  FaGoogleScholar,
-  FaLinkedinIn,
-  FaMedium,
-  FaStackOverflow,
-  FaXTwitter,
-  FaYoutube,
-  FaGoodreadsG,
-} from "react-icons/fa6";
+import { Social, BRAND_HOVER_COLORS, type SocialProfileItem } from "../Social";
 import { DEFAULT_PROFILES } from "../../constants";
 
-export interface SocialProfileItem {
-  name: string;
-  url: string;
-  icon?: React.ReactNode;
-}
+export { BRAND_HOVER_COLORS };
+export type { SocialProfileItem };
 
 export interface FooterProps {
   copyrightHolder?: string;
-  tagline?: string;
+  tagline?: React.ReactNode;
   profiles?: readonly SocialProfileItem[];
   className?: string;
 }
-
-const DEFAULT_ICONS: Record<string, React.ReactNode> = {
-  LinkedIn: <FaLinkedinIn className="size-4" aria-hidden="true" />,
-  GitHub: <FaGithub className="size-4" aria-hidden="true" />,
-  "Google Scholar": <FaGoogleScholar className="size-4" aria-hidden="true" />,
-  Medium: <FaMedium className="size-4" aria-hidden="true" />,
-  "Stack Overflow": <FaStackOverflow className="size-4" aria-hidden="true" />,
-  X: <FaXTwitter className="size-4" aria-hidden="true" />,
-  YouTube: <FaYoutube className="size-4" aria-hidden="true" />,
-  Goodreads: <FaGoodreadsG className="size-4" aria-hidden="true" />,
-};
 
 export function Footer({
   copyrightHolder = "Amr Abed",
@@ -61,41 +37,21 @@ export function Footer({
             <p className="text-xs text-muted">{tagline}</p>
           ) : (
             <p className="text-xs text-muted">
-              Built with Next.js, Tailwind CSS, and HeroUI
+              Built with{" "}
+              <a
+                href="https://tsx.cur8d.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors underline underline-offset-2"
+              >
+                cur8d.tsx
+              </a>
             </p>
           )}
         </div>
 
-        <div className="flex flex-row flex-wrap justify-center gap-2 order-1 md:order-2">
-          {profiles.map((profile) => {
-            const icon = profile.icon ?? DEFAULT_ICONS[profile.name];
-            return (
-              <Tooltip key={profile.name} delay={200} closeDelay={0}>
-                <Tooltip.Trigger
-                  render={(triggerProps: React.HTMLAttributes<Element>) => (
-                    <a
-                      href={profile.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex"
-                    >
-                      <Button
-                        {...triggerProps}
-                        variant="ghost"
-                        size="sm"
-                        isIconOnly
-                        aria-label={`${profile.name} (opens in a new tab)`}
-                        className="text-muted hover:text-primary rounded-full size-9 transition-colors"
-                      >
-                        {icon ?? <span className="text-xs">{profile.name[0]}</span>}
-                      </Button>
-                    </a>
-                  )}
-                />
-                <Tooltip.Content>{profile.name}</Tooltip.Content>
-              </Tooltip>
-            );
-          })}
+        <div className="order-1 md:order-2">
+          <Social profiles={profiles} />
         </div>
       </div>
     </footer>
