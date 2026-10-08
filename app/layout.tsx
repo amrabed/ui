@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/components/Providers";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { Header } from "@/ui/components/Header";
+import { Footer } from "@/ui/components/Footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           >
             Skip to content
           </a>
-          <Navbar />
+          <Header />
           <main id="main-content">
             {children}
           </main>
