@@ -105,4 +105,52 @@ describe("Header / Navbar", () => {
     render(<Header logo={<span data-testid="custom-brand-logo">Logo</span>} />);
     expect(screen.getByTestId("custom-brand-logo")).toBeInTheDocument();
   });
+
+  it("does not render GitHub repository icon when repo prop is omitted", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    render(<Header />);
+    expect(screen.queryByLabelText(/GitHub repository/i)).not.toBeInTheDocument();
+  });
+
+  it("renders GitHub repository icon when repo prop is provided", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    const { rerender } = render(<Header repo="ui" />);
+    const repoLink = screen.getByLabelText(/GitHub repository/i);
+    expect(repoLink).toBeInTheDocument();
+    expect(repoLink).toHaveAttribute("href", "https://github.com/amrabed/ui");
+    expect(repoLink).toHaveAttribute("target", "_blank");
+
+    rerender(<Header repo="amrabed/blog" />);
+    expect(screen.getByLabelText(/GitHub repository/i)).toHaveAttribute(
+      "href",
+      "https://github.com/amrabed/blog",
+    );
+
+    rerender(<Header repo="https://github.com/custom/repo" />);
+    expect(screen.getByLabelText(/GitHub repository/i)).toHaveAttribute(
+      "href",
+      "https://github.com/custom/repo",
+    );
+  });
+
+  it("renders centered desktop navbar items with absolute positioning", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    render(<Header currentSite="home" />);
+    const nav = screen.getByRole("navigation", { name: "Main Navigation" });
+    expect(nav.className).toContain("absolute");
+    expect(nav.className).toContain("left-1/2");
+    expect(nav.className).toContain("-translate-x-1/2");
+  });
 });

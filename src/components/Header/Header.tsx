@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Tooltip } from "@heroui/react";
+import { FaGithub } from "react-icons/fa6";
 import { ThemeToggle } from "../ThemeToggle";
 import { ECOSYSTEM_SITES, AUTHOR } from "../../constants";
 
@@ -21,6 +23,7 @@ export interface HeaderProps {
   avatarUrl?: string | null;
   logo?: React.ReactNode;
   showLogo?: boolean;
+  repo?: string;
   navLinks?: NavLinkItem[];
   showNavLinks?: boolean;
   navAriaLabel?: string;
@@ -45,6 +48,7 @@ export function Header({
   avatarUrl,
   logo,
   showLogo,
+  repo,
   navLinks,
   showNavLinks,
   navAriaLabel,
@@ -67,7 +71,16 @@ export function Header({
     (resolvedSiteTitle ? `${resolvedSiteTitle} Navigation` : "Main Navigation");
 
   const navigationItems = navLinks ?? DEFAULT_ECOSYSTEM_NAV;
-  const shouldRenderNav = showNavLinks ?? (!children || Boolean(navLinks));
+  const shouldRenderNav =
+    showNavLinks ?? (navLinks ? navLinks.length > 0 : true);
+
+  const resolvedRepoUrl = repo
+    ? repo.startsWith("http://") || repo.startsWith("https://")
+      ? repo
+      : repo.includes("/")
+        ? `https://github.com/${repo}`
+        : `https://github.com/amrabed/${repo}`
+    : undefined;
 
   // Determine logo display: explicit showLogo, custom logo node, or default avatarUrl unless disabled
   const shouldShowLogo = showLogo ?? (avatarUrl !== null && avatarUrl !== "");
@@ -91,7 +104,7 @@ export function Header({
         className ?? ""
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4 relative">
         {/* Left: Brand / Breadcrumbs */}
         <div className="flex items-center gap-3 shrink-0">
           <a
@@ -136,7 +149,7 @@ export function Header({
         {shouldRenderNav && (
           <nav
             aria-label={resolvedNavLabel}
-            className="hidden md:flex items-center justify-center gap-6"
+            className="hidden md:flex items-center justify-center gap-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           >
             {navigationItems.map((item) => {
               const active = isCurrentActive(item);
@@ -162,6 +175,29 @@ export function Header({
         <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-end min-w-0">
           {children}
           {actions}
+
+          {resolvedRepoUrl && (
+            <Tooltip delay={200} closeDelay={0}>
+              <Tooltip.Trigger
+                render={(triggerProps: React.HTMLAttributes<Element>) => (
+                  <a
+                    {...triggerProps}
+                    href={resolvedRepoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub repository (opens in a new tab)"
+                    className="inline-flex items-center justify-center size-8 rounded-full text-muted transition-colors hover:bg-surface hover:text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+                  >
+                    <FaGithub className="size-4" aria-hidden="true" />
+                  </a>
+                )}
+              />
+              <Tooltip.Content>
+                <Tooltip.Arrow />
+                GitHub
+              </Tooltip.Content>
+            </Tooltip>
+          )}
 
           <ThemeToggle />
 
