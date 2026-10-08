@@ -72,3 +72,14 @@ export const AUTHOR = {
   url: "https://amrabed.com",
   avatarUrl: "https://amrabed.com/amrabed.webp",
 };
+
+export const ECOSYSTEM_ICONS = {
+  icon: [
+    { url: "/icon.svg", type: "image/svg+xml" },
+    { url: "/icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+    { url: "/icon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+  ],
+  apple: [
+    { url: "/apple-touch-icon.png", sizes: "180x180" },
+  ],
+};

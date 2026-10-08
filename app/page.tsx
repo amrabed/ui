@@ -1,4 +1,5 @@
 import { Footer } from "@/ui/components/Footer";
+import { Logo } from "@/ui/components/Logo";
 import { NavBar } from "@/ui/components/NavBar";
 import { ThemeToggle } from "@/ui/components/ThemeToggle";
 import { DEFAULT_PROFILES, ECOSYSTEM_SITES } from "@/ui/constants";
@@ -36,10 +37,10 @@ export default function Page() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold text-muted uppercase tracking-wider">
-              1. Home Site State (amrabed.com)
+              1. Home Site State (amrabed.com) — Unified Monogram
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <NavBar currentSite="home" showLogo={false} navAriaLabel="Home Showcase Navigation" />
+              <NavBar currentSite="home" logoType="monogram" navAriaLabel="Home Showcase Navigation" />
             </div>
           </div>
 
@@ -62,15 +63,50 @@ export default function Page() {
 
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold text-muted uppercase tracking-wider">
-              3. Courses Site State (amrabed.com/courses)
+              3. Courses Site State (amrabed.com/courses) — Unified Monogram
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
               <NavBar
                 currentSite="courses"
+                logoType="monogram"
                 repo="amrabed/courses"
                 navAriaLabel="Courses Showcase Navigation"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brand Monogram Showcase */}
+      <section className="flex flex-col gap-6">
+        <div>
+          <h2 className="text-xl font-bold text-heading">Unified Brand Monogram</h2>
+          <p className="text-sm text-muted">
+            Vector SVG logo mark used across the web ecosystem for navigation chrome, favicons, and app icons.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="p-6 rounded-xl border border-divider bg-surface flex flex-col items-center justify-center gap-3 text-center">
+            <Logo size={48} className="text-primary" />
+            <span className="text-xs font-bold text-heading">Primary Accent</span>
+            <span className="text-[11px] font-mono text-muted">text-primary (48px)</span>
+          </div>
+
+          <div className="p-6 rounded-xl border border-divider bg-surface flex flex-col items-center justify-center gap-3 text-center">
+            <Logo size={32} className="text-foreground" />
+            <span className="text-xs font-bold text-heading">Adaptive Monogram</span>
+            <span className="text-[11px] font-mono text-muted">text-foreground (32px)</span>
+          </div>
+
+          <div className="p-6 rounded-xl border border-divider bg-surface flex flex-col items-center justify-center gap-3 text-center">
+            <div className="flex items-center gap-3">
+              <Logo size={20} className="text-muted" />
+              <Logo size={24} className="text-muted" />
+              <Logo size={28} className="text-muted" />
+            </div>
+            <span className="text-xs font-bold text-heading">Multi-Scale / Responsive</span>
+            <span className="text-[11px] font-mono text-muted">20px, 24px, 28px</span>
           </div>
         </div>
       </section>

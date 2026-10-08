@@ -107,6 +107,17 @@ describe("NavBar Component", () => {
     expect(screen.getByTestId("custom-brand-logo")).toBeInTheDocument();
   });
 
+  it("renders monogram Logo when logoType is monogram", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    const { container } = render(<NavBar logoType="monogram" />);
+    const svg = container.querySelector("svg[aria-label='Amr Abed']");
+    expect(svg).toBeInTheDocument();
+  });
+
   it("does not render GitHub repository icon when repo prop is omitted", () => {
     (useTheme as Mock).mockReturnValue({
       theme: "light",
