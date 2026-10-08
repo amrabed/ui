@@ -35,4 +35,13 @@ describe("Design System Showcase Page", () => {
     expect(screen.getAllByText("Blog").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Courses").length).toBeGreaterThan(0);
   });
+
+  it("renders the unified brand monogram section", () => {
+    render(<Page />);
+    const monogramHeading = screen.getByRole("heading", {
+      level: 2,
+      name: /Unified Brand Monogram/i,
+    });
+    expect(monogramHeading).toBeInTheDocument();
+  });
 });

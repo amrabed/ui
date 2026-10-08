@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Tooltip } from "@heroui/react";
 import { FaGithub } from "react-icons/fa6";
 
+import { Logo } from "@/ui/components/Logo";
 import { ThemeToggle } from "@/ui/components/ThemeToggle";
 import { AUTHOR, ECOSYSTEM_SITES } from "@/ui/constants";
 
@@ -23,6 +24,7 @@ export interface NavBarProps {
   authorHref?: string;
   avatarUrl?: string | null;
   logo?: React.ReactNode;
+  logoType?: "avatar" | "monogram";
   showLogo?: boolean;
   repo?: string;
   navLinks?: NavLinkItem[];
@@ -51,6 +53,7 @@ export function NavBar({
   authorHref = AUTHOR.url,
   avatarUrl,
   logo,
+  logoType,
   showLogo,
   repo,
   navLinks,
@@ -86,8 +89,10 @@ export function NavBar({
         : `https://github.com/amrabed/${repo}`
     : undefined;
 
-  // Determine logo display: explicit showLogo, custom logo node, or default avatarUrl unless disabled
-  const shouldShowLogo = showLogo ?? (avatarUrl !== null && avatarUrl !== "");
+  // Determine logo display: explicit showLogo, custom logo node, or default avatarUrl/monogram unless disabled
+  const shouldShowLogo =
+    showLogo ??
+    (logoType === "monogram" || (avatarUrl !== null && avatarUrl !== ""));
   const resolvedAvatarUrl =
     avatarUrl !== undefined ? avatarUrl : (shouldShowLogo ? AUTHOR.avatarUrl : null);
 
@@ -118,6 +123,11 @@ export function NavBar({
           >
             {logo ? (
               logo
+            ) : shouldShowLogo && logoType === "monogram" ? (
+              <Logo
+                size={32}
+                className="text-primary group-hover:opacity-80 transition-opacity shrink-0"
+              />
             ) : shouldShowLogo && resolvedAvatarUrl ? (
               <div className="relative w-8 h-8 rounded-full overflow-hidden border border-divider group-hover:border-primary transition-colors">
                 <Image
