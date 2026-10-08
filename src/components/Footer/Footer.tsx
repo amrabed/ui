@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button, Tooltip } from "@heroui/react";
+import { Tooltip } from "@heroui/react";
 import {
   FaGithub,
   FaGoogleScholar,
@@ -25,7 +25,7 @@ export interface SocialProfileItem {
 
 export interface FooterProps {
   copyrightHolder?: string;
-  tagline?: string;
+  tagline?: React.ReactNode;
   profiles?: readonly SocialProfileItem[];
   className?: string;
 }
@@ -76,7 +76,15 @@ export function Footer({
             <p className="text-xs text-muted">{tagline}</p>
           ) : (
             <p className="text-xs text-muted">
-              Built with Next.js, Tailwind CSS, and HeroUI
+              Built with{" "}
+              <a
+                href="https://tsx.cur8d.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors underline underline-offset-2"
+              >
+                cur8d.tsx
+              </a>
             </p>
           )}
         </div>
@@ -112,18 +120,11 @@ export function Footer({
                       href={profile.url}
                       target="_blank"
                       rel="noopener noreferrer me"
-                      className="inline-flex"
+                      aria-label={`${profile.name} (opens in a new tab)`}
+                      className="inline-flex items-center justify-center size-8 rounded-full text-muted transition-colors hover:bg-surface hover:text-[var(--social-hover-color)] dark:hover:text-[var(--social-hover-color-dark,var(--social-hover-color))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      style={style}
                     >
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        isIconOnly
-                        aria-label={`${profile.name} (opens in a new tab)`}
-                        className="text-muted rounded-full transition-colors hover:text-[var(--social-hover-color)] dark:hover:text-[var(--social-hover-color-dark,var(--social-hover-color))]"
-                        style={style}
-                      >
-                        {icon ?? <span className="text-xs">{profile.name[0]}</span>}
-                      </Button>
+                      {icon ?? <span className="text-xs">{profile.name[0]}</span>}
                     </a>
                   )}
                 />

@@ -34,4 +34,13 @@ describe("Footer", () => {
     expect(screen.getByLabelText(/GitHub/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Google Scholar/i)).toBeInTheDocument();
   });
+
+  it("renders Built with cur8d.tsx link by default", () => {
+    render(<Footer />);
+
+    const link = screen.getByRole("link", { name: "cur8d.tsx" });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "https://tsx.cur8d.dev");
+    expect(link).toHaveAttribute("target", "_blank");
+  });
 });
