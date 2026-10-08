@@ -1,2 +1,2 @@
-export * from "@/ui/components";
-export * from "@/ui/constants";
+export * from "./components";
+export * from "./constants";

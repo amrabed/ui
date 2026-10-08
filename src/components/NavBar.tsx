@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Tooltip } from "@heroui/react";
 import { FaGithub } from "react-icons/fa6";
 
-import { Logo } from "@/ui/components/Logo";
-import { ThemeToggle } from "@/ui/components/ThemeToggle";
-import { AUTHOR, ECOSYSTEM_SITES } from "@/ui/constants";
+import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
+import { AUTHOR, ECOSYSTEM_SITES } from "../constants";
 
 export interface NavLinkItem {
   name: string;
