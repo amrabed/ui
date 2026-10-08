@@ -84,4 +84,25 @@ describe("Header / Navbar", () => {
 
     expect(screen.getByTestId("custom-search-widget")).toBeInTheDocument();
   });
+
+  it("renders with logo omitted when showLogo is false", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    const { container } = render(<Header showLogo={false} />);
+    const images = container.querySelectorAll("img");
+    expect(images.length).toBe(0);
+  });
+
+  it("renders custom logo when logo prop is provided", () => {
+    (useTheme as Mock).mockReturnValue({
+      theme: "light",
+      setTheme,
+    });
+
+    render(<Header logo={<span data-testid="custom-brand-logo">Logo</span>} />);
+    expect(screen.getByTestId("custom-brand-logo")).toBeInTheDocument();
+  });
 });

@@ -39,7 +39,7 @@ export default function Page() {
               1. Home Site State (amrabed.com)
             </span>
             <div className="rounded-xl border border-divider overflow-hidden shadow-sm">
-              <Header currentSite="home" navAriaLabel="Home Showcase Navigation" />
+              <Header currentSite="home" showLogo={false} navAriaLabel="Home Showcase Navigation" />
             </div>
           </div>
 

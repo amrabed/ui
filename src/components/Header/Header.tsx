@@ -16,7 +16,11 @@ export interface HeaderProps {
   currentSite?: "home" | "blog" | "courses";
   siteTitle?: string;
   siteHomeHref?: string;
-  avatarUrl?: string;
+  authorName?: string;
+  authorHref?: string;
+  avatarUrl?: string | null;
+  logo?: React.ReactNode;
+  showLogo?: boolean;
   navLinks?: NavLinkItem[];
   showNavLinks?: boolean;
   navAriaLabel?: string;
@@ -36,7 +40,11 @@ export function Header({
   currentSite = "home",
   siteTitle,
   siteHomeHref = "/",
-  avatarUrl = AUTHOR.avatarUrl,
+  authorName = AUTHOR.name,
+  authorHref = AUTHOR.url,
+  avatarUrl,
+  logo,
+  showLogo,
   navLinks,
   showNavLinks,
   navAriaLabel,
@@ -61,6 +69,11 @@ export function Header({
   const navigationItems = navLinks ?? DEFAULT_ECOSYSTEM_NAV;
   const shouldRenderNav = showNavLinks ?? (!children || Boolean(navLinks));
 
+  // Determine logo display: explicit showLogo, custom logo node, or default avatarUrl unless disabled
+  const shouldShowLogo = showLogo ?? (avatarUrl !== null && avatarUrl !== "");
+  const resolvedAvatarUrl =
+    avatarUrl !== undefined ? avatarUrl : (shouldShowLogo ? AUTHOR.avatarUrl : null);
+
   const isCurrentActive = (item: NavLinkItem) => {
     if (navLinks) return false;
     if (currentSite === "home" && item.name === "Home") return true;
@@ -82,23 +95,27 @@ export function Header({
         {/* Left: Brand / Breadcrumbs */}
         <div className="flex items-center gap-3 shrink-0">
           <a
-            href={AUTHOR.url}
+            href={authorHref}
             className="group flex items-center gap-2.5 text-sm font-medium text-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
-            title="Return to amrabed.com"
+            title={`Return to ${authorName}`}
           >
-            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-divider group-hover:border-primary transition-colors">
-              <Image
-                src={avatarUrl}
-                alt=""
-                aria-hidden="true"
-                fill
-                sizes="32px"
-                className="object-cover"
-                unoptimized
-              />
-            </div>
+            {logo ? (
+              logo
+            ) : shouldShowLogo && resolvedAvatarUrl ? (
+              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-divider group-hover:border-primary transition-colors">
+                <Image
+                  src={resolvedAvatarUrl}
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  sizes="32px"
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+            ) : null}
             <span className="font-semibold text-heading group-hover:text-primary transition-colors">
-              {AUTHOR.name}
+              {authorName}
             </span>
           </a>
 
