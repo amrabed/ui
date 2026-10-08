@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { RouterProvider } from "@heroui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-export interface ProvidersProps {
+export interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export function Providers({ children }: ProvidersProps) {
+export function ThemeProvider({ children }: ThemeProviderProps) {
   const router = useRouter();
 
   return (
@@ -21,4 +21,6 @@ export function Providers({ children }: ProvidersProps) {
   );
 }
 
-export default Providers;
+export const Providers = ThemeProvider;
+export type ProvidersProps = ThemeProviderProps;
+export default ThemeProvider;
