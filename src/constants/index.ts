@@ -93,6 +93,3 @@ export const icons = {
     { url: `${BRAND_URL}/apple-touch-icon.png`, sizes: "180x180" },
   ],
 };
-
-/** @deprecated Use `icons` instead */
-export const ECOSYSTEM_ICONS = icons;
