@@ -3,6 +3,7 @@ packages:
   - "docs"
 allowBuilds:
   esbuild: true
+  koffi: false
   protobufjs: true
   re2: true
   sharp: true
