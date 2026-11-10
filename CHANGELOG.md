@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-11-09
+
+### Security
+- **Zod Memory Exhaustion (CVE-2023-54404 / GHSA-mrhx-c7xc-m3w5)**: Bumped `zod` to 4.6.7 to resolve uncontrolled resource consumption in array validation (fixes Dependabot #29).
+- **Minimatch Pattern Amplification DoS (CVE-2026-118764 / GHSA-g3hv-75wg-m249)**: Bumped `minimatch` to 11.0.5 to prevent quadratic pattern amplification DoS (fixes Dependabot #32).
+- **Glob AbortSignal Cancellation Bypass (GHSA-3g3m-2fjr-6pw4)**: Bumped `glob` to 14.0.4.
+
+### Changed
+- Bumped workspace dependencies to latest compatible versions.
+
 ## [0.2.0] - 2026-10-15
 
 ### Removed
